@@ -12,8 +12,8 @@ export default class App extends Component {
       <Router>
         <Root>   
           <Main>
-            <Route exact={true} path="/" render={() => <Frame title='Situation'/>}/>
-            <Route exact={true} path="/mood" render={() => <Frame title='Mood'/>}/>
+            <Route exact={true} path="/" render={() => <Frame title="Situation"/>}/>
+            <Route exact={true} path="/mood" render={() => <Frame title="Mood"/>}/>
           </Main>
         </Root>
       </Router>
@@ -21,12 +21,23 @@ export default class App extends Component {
   }
 }
 
-const Frame = ({ title }) => (
-  <h1>
-    {title}
-  </h1>
-)
+function Frame(props){
+  return(
+    <div>
+      <h1>
+        {props.title}
+      </h1>
+      <div className="Comment-date">
+        {formatDate(new Date())}
+      </div>
+    </div>
+  );
+}
 
+
+function formatDate(date) {
+  return date.toLocaleDateString();
+}
 
 
 class LoadFile extends Component {
