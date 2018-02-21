@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
+import Situation from './Situation.js';
+
 // App component - represents the whole app
 export default class App extends Component {
 
@@ -12,7 +14,7 @@ export default class App extends Component {
       <Router>
         <Root>   
           <Main>
-            <Route exact={true} path="/" render={() => <Frame title="Situation"/>}/>
+            <Route exact={true} path="/" component={Situation}/>
             <Route exact={true} path="/mood" render={() => <Frame title="Mood"/>}/>
           </Main>
         </Root>
