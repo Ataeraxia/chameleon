@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
-import Situation from './Situation.js';
+import { withRouter } from 'react-router';
 
 // App component - represents the whole app
 export default class App extends Component {
@@ -15,7 +15,7 @@ export default class App extends Component {
         <Root>   
           <Main>
             <Route exact={true} path="/" component={Situation}/>
-            <Route exact={true} path="/mood" render={() => <Frame title="Mood"/>}/>
+            <Route exact={true} path="/mood" component={Mood}/>
           </Main>
         </Root>
       </Router>
@@ -23,22 +23,20 @@ export default class App extends Component {
   }
 }
 
+// Contains the section title along with the current date
 function Frame(props){
   return(
     <div>
       <h1>
         {props.title}
       </h1>
-      <div className="Comment-date">
-        {formatDate(new Date())}
-      </div>
     </div>
   );
 }
 
 
 function formatDate(date) {
-  return date.toLocaleDateString();
+  return date.toLocaleString();
 }
 
 
@@ -107,3 +105,31 @@ const Main = (props) => (
     <div style={{ padding: '20px' }} {...props}></div>
   </div>
 )
+
+class Situation extends Component {
+  render() {
+    return (
+      <div className="Situation">
+        <Frame title="Situation"/>
+        <div className="Comment-date">
+          {formatDate(new Date())}
+        </div>
+        <textarea autoFocus={true}></textarea>
+        <Link to={'/mood'}>Next</Link>
+      </div>
+    );
+  }
+}
+
+// Mood component
+class Mood extends Component {
+  render(){
+    return(
+      <div className="Mood">
+        <Frame title="Mood"/>
+        <input type="text" />
+        <Link to={'/'}>Next</Link>
+      </div>
+    );
+  }
+}
