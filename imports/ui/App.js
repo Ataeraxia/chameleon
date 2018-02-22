@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import { withRouter } from 'react-router';
 
-import { NumberInput } from 'carbon-components-react';
+import { NumberInput, TextInput, Table, TableBody, TableHead, TableHeader, TableRow, TableData } from 'carbon-components-react';
 
 import 'carbon-components/css/carbon-components.css';
 
@@ -20,6 +20,7 @@ export default class App extends Component {
           <Main>
             <Route exact={true} path="/" component={Situation}/>
             <Route exact={true} path="/mood" component={Mood}/>
+            <Route exact={true} path="/automatic" component={Automatic}/>
           </Main>
         </Root>
       </Router>
@@ -110,6 +111,7 @@ const Main = (props) => (
   </div>
 )
 
+//Situation component
 class Situation extends Component {
   render() {
     return (
@@ -149,27 +151,66 @@ class Mood extends Component {
     return(
       <div className="Mood">
         <Frame title="Mood"/>
-        <table>
-          <tr>
-            <td>
-              <input type="text"></input>
-            </td>
-            <td>
-            <NumberInput
-              className="some-class"
-              id="tj-input"
-              label="Percentage"
-              onChange={this.handleChange}
-              onClick={this.handleClick}
-              min={0}
-              max={100}
-              value={50}
-              step={10}
-              invalidText="Number is not valid"
-            />
-            </td>
-          </tr>
-        </table>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableData>
+                <input type="text"></input>
+              </TableData>
+              <TableData>
+              <NumberInput
+                className="some-class"
+                id="tj-input"
+                label="Percentage"
+                onChange={this.handleChange}
+                onClick={this.handleClick}
+                min={0}
+                max={100}
+                value={50}
+                step={10}
+                invalidText="Number is not valid"
+              />
+              </TableData>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <Link to={'/automatic'}>Next</Link>
+      </div>
+    );
+  }
+}
+
+// Automatic thought component
+class Automatic extends Component {
+
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {thought: ''};
+  }
+
+  handleChange = (e) => {
+    this.setState({thought: e.value});
+  }
+
+  // Empty click handler
+  handleClick = () => {
+    
+  }
+
+
+  render(){
+    return(
+      <div className="Automatic">
+        <Frame title="Automatic"/>
+        <TextInput
+          className="some-class"
+          id="test2"
+          labelText="Automatic Thought"
+          onClick={this.handleClick}
+          onChange={this.handleChange}
+          placeholder="I think that..."
+        />
         <Link to={'/'}>Next</Link>
       </div>
     );
