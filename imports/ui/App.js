@@ -32,7 +32,7 @@ export default class App extends Component {
 function Frame(props){
   return(
     <div>
-      <h1>
+      <h1 className="frame-title">
         {props.title}
       </h1>
     </div>
