@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import { withRouter } from 'react-router';
 
+import { Slider } from 'carbon-components-react';
+
+import 'carbon-components/css/carbon-components.css';
+
 // App component - represents the whole app
 export default class App extends Component {
 
@@ -123,11 +127,33 @@ class Situation extends Component {
 
 // Mood component
 class Mood extends Component {
+  
+  constructor(props){
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {level: 0};
+  }
+
+  handleChange = (e) => {
+    this.setState({level: e.value});
+  }
+
   render(){
+    const level = this.state.level;
+
     return(
       <div className="Mood">
         <Frame title="Mood"/>
-        <input type="text" />
+        <input type="text"></input>
+        <Slider
+          id="slider"
+          value={level}
+          min={0}
+          max={100}
+          step={1}
+          labelText="Slider Label"
+          onChange={this.handleChange}
+        />
         <Link to={'/'}>Next</Link>
       </div>
     );

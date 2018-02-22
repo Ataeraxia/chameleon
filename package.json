@@ -6,6 +6,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
+    "carbon-components": "^8.15.2",
+    "carbon-components-react": "^5.23.0",
+    "carbon-icons": "^6.3.1",
     "meteor-node-stubs": "^0.3.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
