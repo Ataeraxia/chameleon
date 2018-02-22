@@ -1,3 +1,32 @@
-body {
-    background-color: purple;
+html, body {
+    height: 100%;
+}
+
+.root {
+    display: flex;
+    // background-color: red;
+}
+
+.sidebar {
+    width: 33vw;
+    height: 100vh;
+    overflow: auto;
+    background: #eee;
+}
+
+.sidebar-item {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 5px 10px;
+}
+
+.main-inner {
+    padding: 20px;
+}
+
+.main-outer {
+    flex: 1;
+    height: 100vh;
+    overflow: auto;
 }
