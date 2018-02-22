@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import { withRouter } from 'react-router';
 
-import { Slider } from 'carbon-components-react';
+import { NumberInput } from 'carbon-components-react';
 
 import 'carbon-components/css/carbon-components.css';
 
@@ -138,22 +138,38 @@ class Mood extends Component {
     this.setState({level: e.value});
   }
 
+  // Empty click handler
+  handleClick = () => {
+    
+  }
+
   render(){
     const level = this.state.level;
 
     return(
       <div className="Mood">
         <Frame title="Mood"/>
-        <input type="text"></input>
-        <Slider
-          id="slider"
-          value={level}
-          min={0}
-          max={100}
-          step={1}
-          labelText="Slider Label"
-          onChange={this.handleChange}
-        />
+        <table>
+          <tr>
+            <td>
+              <input type="text"></input>
+            </td>
+            <td>
+            <NumberInput
+              className="some-class"
+              id="tj-input"
+              label="Percentage"
+              onChange={this.handleChange}
+              onClick={this.handleClick}
+              min={0}
+              max={100}
+              value={50}
+              step={10}
+              invalidText="Number is not valid"
+            />
+            </td>
+          </tr>
+        </table>
         <Link to={'/'}>Next</Link>
       </div>
     );
