@@ -138,19 +138,26 @@ class Mood extends Component {
           <TableBody>
             <TableRow>
               <TableData>
+                Name of mood
+              </TableData>
+              <TableData>
+                Intensity of mood (in %)
+              </TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
                 <input type="text"></input>
               </TableData>
               <TableData>
               <NumberInput
                 className="some-class"
                 id="tj-input"
-                label="Percentage"
                 onChange={this.handleChange}
                 onClick={this.handleClick}
                 min={0}
                 max={100}
                 value={50}
-                step={10}
+                step={5}
                 invalidText="Number is not valid"
               />
               </TableData>
