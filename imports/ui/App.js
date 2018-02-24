@@ -3,28 +3,124 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import { withRouter } from 'react-router';
 
-import { NumberInput, TextInput, Table, TableBody, TableHead, TableHeader, TableRow, TableData } from 'carbon-components-react';
+import { withTracker } from 'meteor/react-meteor-data';
+
+import { NumberInput, Table, TableBody, TableHead, TableHeader, TableRow, TableData, Module, ModuleBody, ModuleHeader } from 'carbon-components-react';
 
 import 'carbon-components/css/carbon-components.css';
 
+import { Records } from '../api/records.js';
+import Record from './Record.js';
+
 // App component - represents the whole app
-export default class App extends Component {
+class App extends Component {
+
+  getRecords(){
+    return [
+      { _id: 1,
+        situation: {
+          date: new Date(),
+          description: "Oh no it is a thing that happen this is my life right now"
+        },
+        moods: [
+          {
+            name: "Anxious",
+            rating: 45,
+            isDominant: true
+          }, {
+            name: "Hopeful",
+            rating: 5,
+            isDominant: false
+          }
+        ],
+        autoThoughts: [
+          {
+            content: "I hate this so much",
+            isDominant: false
+          }, {
+            content: "This will never work",
+            isDominant: false
+          }, {
+            content: "They will suffer because of me",
+            isDominant: true
+          }
+        ],
+        pro: [
+          {
+            content: "They get upset when I'm like this"
+          },
+          {
+            content: "She said she can't deal with this"
+          }
+        ],
+        con: [
+          {
+            content: "I still make her smile sometimes"
+          },
+          {
+            content: "She says it's getting better"
+          }
+        ],
+        alt: [
+          {
+            content: "She's said she can't deal with this before, but she's also said it's getting better",
+            isDominant: false,
+            beliefRating: 20
+          },
+          {
+            content: "Sometimes I upset them, but I can also make them smile",
+            isDominant: true,
+            beliefRating: 45
+          }
+        ],
+        moodsAfter: [
+          {
+            name: "Anxious",
+            rating: 20,
+            isDominant: true
+          }, {
+            name: "Hopeful",
+            rating: 25,
+            isDominant: false
+          }
+        ]
+      }
+    ];
+  }
+
+  renderRecords() {
+    return this.getRecords().map((record) => (
+      <Record key={record._id} situation={record.situation} moods={record.moods} autoThoughts={record.autoThoughts}
+      pro={record.pro} con={record.con} alt={record.alt} moodsAfter={record.moodsAfter} />
+    ))
+  }
 
   componentDidMount(){
     }
 
   render() {
     return(
-      <Router>
+      <div className="container">
+        <header>
+          <h1>Records</h1>
+        </header>
+        <ul>
+          {this.renderRecords()}
+        </ul>
+      </div>
+/*         <Router>
         <Root>   
           <Main>
             <Route exact={true} path="/" component={Situation}/>
             <Route exact={true} path="/mood" component={Mood}/>
             <Route exact={true} path="/automatic" component={Automatic}/>
+            <Route exact={true} path="/pro" component={Pro}/>
+            <Route exact={true} path="/con" component={Con}/>
+            <Route exact={true} path="/alt" component={Alt}/>
           </Main>
         </Root>
-      </Router>
-    )
+       </Router> */
+    );
   }
 }
 
@@ -32,12 +128,13 @@ export default class App extends Component {
 function Frame(props){
   return(
     <div>
-      <h1 className="frame-title">
+      <h1>
         {props.title}
       </h1>
     </div>
   );
 }
+
 
 
 function formatDate(date) {
@@ -94,115 +191,16 @@ const Main = (props) => (
   </div>
 )
 
-//Situation component
-class Situation extends Component {
-  render() {
-    return (
-      <div className="Situation">
-        <Frame title="Situation"/>
-        <div className="Comment-date">
-          {formatDate(new Date())}
-        </div>
-        <textarea autoFocus={true}></textarea>
-        <Link to={'/mood'}>Next</Link>
-      </div>
-    );
-  }
-}
-
-// Mood component
-class Mood extends Component {
-  
-  constructor(props){
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {level: 0};
-  }
-
-  handleChange = (e) => {
-    this.setState({level: e.value});
-  }
-
-  // Empty click handler
-  handleClick = () => {
-    
-  }
-
-  render(){
-    const level = this.state.level;
-
-    return(
-      <div className="Mood">
-        <Frame title="Mood"/>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableData>
-                Name of mood
-              </TableData>
-              <TableData>
-                Intensity of mood (in %)
-              </TableData>
-            </TableRow>
-            <TableRow>
-              <TableData>
-                <input type="text"></input>
-              </TableData>
-              <TableData>
-              <NumberInput
-                className="some-class"
-                id="tj-input"
-                onChange={this.handleChange}
-                onClick={this.handleClick}
-                min={0}
-                max={100}
-                value={50}
-                step={5}
-                invalidText="Number is not valid"
-              />
-              </TableData>
-            </TableRow>
-          </TableBody>
-        </Table>
-        <Link to={'/automatic'}>Next</Link>
-      </div>
-    );
-  }
-}
-
-// Automatic thought component
-class Automatic extends Component {
-
-  constructor(props){
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {thought: ''};
-  }
-
-  handleChange = (e) => {
-    this.setState({thought: e.value});
-  }
-
-  // Empty click handler
-  handleClick = () => {
-    
-  }
 
 
-  render(){
-    return(
-      <div className="Automatic">
-        <Frame title="Automatic"/>
-        <TextInput
-          className="some-class"
-          id="test2"
-          labelText="Automatic Thought"
-          onClick={this.handleClick}
-          onChange={this.handleChange}
-          placeholder="I think that..."
-        />
-        <Link to={'/'}>Next</Link>
-      </div>
-    );
-  }
-}
+
+
+
+
+
+
+export default withTracker(() => {
+  return {
+    records: Records.find({}).fetch(),
+  };
+})(App);

@@ -9,14 +9,12 @@ export class Situation extends Component {
     return (
       <div className="Situation">
         <Frame title="Situation"/>
-        <button className="Next" onClick={this.props.history.push("/mood")}>
-          Next
-        </button>
+        <div className="Comment-date">
+          {formatDate(new Date())}
+        </div>
+        <textarea autoFocus={true}></textarea>
+        <Link to={'/mood'}>Next</Link>
       </div>
     );
   }
-}
-
-function formatDate(date) {
-  return date.toLocaleDateString();
 }
